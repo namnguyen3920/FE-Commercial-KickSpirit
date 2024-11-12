@@ -1,10 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+
 import {Header} from "./components";
+import {Home} from "./pages";
 function App() {
   return (
     <div className="App">
-      <Header/>
+      <header class="fixed w-full top-0 z-50">
+        <Header/>
+      </header>
+      <main>
+        <Home/>
+      </main>
+      
     </div>
   );
 }
