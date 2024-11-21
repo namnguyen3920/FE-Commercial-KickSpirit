@@ -1,10 +1,10 @@
 import React from 'react';
 import CategoriesLink from './header-components/category-components/CategoriesLink';
 import HeaderLogo from './header-components/HeaderLogo';
-import { BrandsContent } from './header-components/category-components/panel-contents/BrandsContent';
-import { MenContent } from './header-components/category-components/panel-contents/MenContents';
-import { WomenContent } from './header-components/category-components/panel-contents/WomenContent';
-import { KidContent } from './header-components/category-components/panel-contents/KidContent';
+import { BrandsContent } from './header-components/category-components/categories-contents/BrandsContent';
+import { MenContent } from './header-components/category-components/categories-contents/MenContents';
+import { WomenContent } from './header-components/category-components/categories-contents/WomenContent';
+import { KidContent } from './header-components/category-components/categories-contents/KidContent';
 
 const Header = () => {
     return (

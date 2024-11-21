@@ -17,7 +17,6 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-
         const response = await productRequest.getAllProducts();
         console.log(response);
         setproducts(response);
@@ -32,7 +31,7 @@ const Home = () => {
   }, [setproducts]);
 
   return (
-    <div class="container mx-auto my-12 flex-grow overflow-y-auto">
+    <div class="container mx-auto my-40 flex-grow overflow-y-auto">
       <div class="grid md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-4 gap-4">
         {products.map((product, index) => (
           <ProductCard
