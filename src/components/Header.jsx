@@ -9,8 +9,7 @@ import { KidContent } from './header-components/category-components/categories-c
 const Header = () => {
     return (
         <header>
-
-            <div class="bg-white border-gray-200 dark:bg-gray-900">
+            <div class="bg-white dark:bg-gray-900">
                 <HeaderLogo />
             </div>
 

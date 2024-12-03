@@ -18,8 +18,8 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const response = await productRequest.getAllProducts();
-        console.log(response);
         setproducts(response);
+        console.log(products);
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -28,7 +28,15 @@ const Home = () => {
     };
 
     fetchData();
-  }, [setproducts]);
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <div class="container mx-auto my-40 flex-grow overflow-y-auto">

@@ -9,7 +9,7 @@ export function BrandsContent() {
     };
     
     return (
-        <div class="relative flex justify-center w-full -translate-x-1/3 -left-[107px] h-max bg-white p-9  shadow-xl">
+        <div class="relative flex justify-center -translate-x-1/3 h-max bg-white p-9  shadow-xl">
             <div className="items-center grid md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-2 gap-10">
                 <div className="relative items-center">
                     <p className="font-bold mb-4">Brands</p>
@@ -27,6 +27,10 @@ export function BrandsContent() {
                 <div className="relative">
                     <p className="font-bold mb-4">Top Brands</p>
                     <div>This if second col contents</div>
+                </div>
+                <div className="relative">
+                    <p className="font-bold mb-4">All Brands</p>
+                    <div>This if third col contents</div>
                 </div>
             </div>
         </div>

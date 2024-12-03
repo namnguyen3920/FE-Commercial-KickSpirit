@@ -23,7 +23,7 @@ const CategoriesLink = ({ children, href, Contents }) => {
                 />
             </a>
             {showFlyout && (
-                <div class="absolute w-screen top-10 h-fit">
+                <div class="absolute w-max top-10 h-fit">
                     <Contents />
                 </div>)}
         </div>

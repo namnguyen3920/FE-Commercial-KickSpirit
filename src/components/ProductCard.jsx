@@ -9,7 +9,7 @@ const ProductCard = (props) => {
     return (
         <a href="#">
             <div className="w-full relative">
-                <div className="max-w-36 max-h-36 relative overflow-y-hidden ">
+                <div className="max-w-48 max-h-36 relative overflow-y-hidden ">
                     <div>
                         <img className="w-full h-48" src={props.img} />
                     </div>
