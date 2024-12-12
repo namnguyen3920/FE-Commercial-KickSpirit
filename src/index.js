@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import { RecoilRoot } from 'recoil';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { LoginForm } from './pages';
+import { Login } from './pages';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -16,7 +16,7 @@ root.render(
           <Route path="/" element={<App />}/>
         </Routes>
         <Routes>
-          <Route path="/login" element={<LoginForm />}/>
+          <Route path="/login" element={<Login />}/>
         </Routes>
       </BrowserRouter>
     </RecoilRoot>

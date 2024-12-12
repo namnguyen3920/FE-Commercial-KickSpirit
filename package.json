@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -10,6 +11,8 @@
     "axios": "^1.7.7",
     "flowbite": "^2.5.2",
     "framer-motion": "^11.11.11",
+    "jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0",
     "postcss": "^8.4.47",
     "qs": "^6.13.0",
     "react": "^18.3.1",

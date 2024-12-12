@@ -1,10 +1,11 @@
 import AxiosHelper from "../AxiosHelper";
 
-const base_url = "/products";
+const baseURL = '/products'
+
 class ProductRequest {
     
     getAllProducts(){
-        const url = base_url;
+        let url = baseURL;
         return AxiosHelper.get(url);
     }
 

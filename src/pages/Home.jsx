@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { productState } from '../recoil/atoms/productAtoms';
+import React, { useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { productState } from "../recoil/atoms/productAtoms";
 
-import ProductCard from '../components/ProductCard';
-import ProductRequest from '../caller/api-requestor/ProductRequest';
-
+import ProductCard from "../components/ProductCard";
+import ProductRequest from "../caller/api-requestor/ProductRequest";
 
 const Home = () => {
   const [products, setproducts] = useRecoilState(productState);
@@ -37,7 +36,6 @@ const Home = () => {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-
   return (
     <div class="container mx-auto my-40 flex-grow overflow-y-auto">
       <div class="grid md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-4 gap-4">
@@ -54,7 +52,6 @@ const Home = () => {
       </div>
     </div>
   );
-
 };
 
 export default React.memo(Home);
