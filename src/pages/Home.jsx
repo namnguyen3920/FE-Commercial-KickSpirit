@@ -11,12 +11,10 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const productRequest = new ProductRequest();
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await productRequest.getAllProducts();
+        const response = await ProductRequest.getAllProducts();
         setproducts(response);
         console.log(products);
         setLoading(false);

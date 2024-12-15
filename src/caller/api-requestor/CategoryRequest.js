@@ -1,14 +1,14 @@
 import AxiosHelper from "../AxiosHelper";
 
-const baseURL = '/products'
+const baseURL = '/category'
 
-class ProductRequest {
+class CategoryRequest {
     
-    getAllProducts(){
+    getCategoryName(){
         let url = baseURL;
         return AxiosHelper.get(url);
     }
 
 }
 
-export default new ProductRequest();
+export default new CategoryRequest();

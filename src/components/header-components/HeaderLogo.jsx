@@ -190,7 +190,7 @@ const ProfileBtn = () => {
           </a>
           {isAdmin && (
             <a
-              href=""
+              href="/admin"
               class="my-2 flex border-b border-gray-100 py-1 font-semibold text-gray-500 hover:text-black md:mx-2"
             >
               Admin

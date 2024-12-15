@@ -6,4 +6,9 @@ export const userState = atom({
         user: null,
         token: null
     }
-});
+}); 
+
+export const userAdminState = atom ({
+    key: 'userAdminState',
+    default: [],
+})
