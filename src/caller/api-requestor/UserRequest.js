@@ -12,7 +12,16 @@ class UserRequest {
         try {
             const response = await AxiosHelper.post(`${baseURL}/add-user`, formData)
             return response;
-        }catch(err) {
+        } catch(err) {
+            throw err;
+        }
+    }
+
+    deleteUser = async(id) => {
+        try {
+            const response = await AxiosHelper.delete(`${baseURL}/del-user/${id}`);
+            return response;
+        } catch(err) {
             throw err;
         }
     }
@@ -23,7 +32,7 @@ class UserRequest {
             const response = await AxiosHelper.post(`${baseURL}/login`, loginUser);            
             console.log("Response from api requestor: ", response);
             return response;
-        }catch(err){
+        } catch(err){
             throw err;
         }
     }

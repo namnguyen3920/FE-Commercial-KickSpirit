@@ -9,6 +9,7 @@ class ProductRequest {
         return AxiosHelper.get(url);
     }
 
+
 }
 
 export default new ProductRequest();
