@@ -73,7 +73,7 @@ const HeaderLogo = () => {
           <span className="sr-only">Search</span>
         </button>
       </div>
-      <a href="#" className="flex items-center space-x-3">
+      <a href="/" className="flex items-center space-x-3">
         <img
           src="https://flowbite.com/docs/images/logo.svg"
           className="h-8"
@@ -182,7 +182,7 @@ const ProfileBtn = () => {
         </a>
         <div className="invisible absolute right-0 top-full z-50 flex w-40 flex-col bg-gray-100 py-1 px-4 text-gray-800 shadow-xl group-hover:visible">
           <a
-            href=""
+            href="/profile"
             class="my-2 flex border-b border-gray-100 py-1 font-semibold text-gray-500 hover:text-black md:mx-2"
           >
             <UserCircleIcon className="w-6 h-6 mr-2" />

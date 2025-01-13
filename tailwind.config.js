@@ -11,6 +11,22 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      screens: {
+        sm: '640px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
+        '2xl': '1536px',
+      },
+      container: {
+        screens: {
+          sm: '100%',
+          md: '100%',
+          lg: '768px',
+          xl: '1024px',
+          '2xl': '1180px',
+        },
+      },
       boxShadow: {
         'login': '0 10px 20px rgba(0, 0, 0, 0.2), 0 -10px 20px rgba(0, 0, 0, 0.2), 10px 0 20px rgba(0, 0, 0, 0.2), -10px 0 20px rgba(0, 0, 0, 0.2)',
         'card': '0px 1px 3px rgba(0, 0, 0, 0.12)',

@@ -4,6 +4,7 @@ import { productState } from "../recoil/atoms/productAtoms";
 
 import ProductCard from "../components/ProductCard";
 import ProductRequest from "../caller/api-requestor/ProductRequest";
+import { ListProduct, SliderBanner } from "../components";
 
 const Home = () => {
   const [products, setproducts] = useRecoilState(productState);
@@ -16,7 +17,6 @@ const Home = () => {
       try {
         const response = await ProductRequest.getAllProducts();
         setproducts(response);
-        console.log(products);
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -26,6 +26,9 @@ const Home = () => {
 
     fetchData();
   }, []);
+  useEffect(() => {
+    console.log("Current products in Recoil:", products);
+  }, [products]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -35,19 +38,11 @@ const Home = () => {
     return <div>Error: {error.message}</div>;
   }
   return (
-    <div class="container mx-auto my-40 flex-grow overflow-y-auto">
-      <div class="grid md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-4 gap-4">
-        {products.map((product, index) => (
-          <ProductCard
-            key={product.index}
-            _id={product._id}
-            img={product.img}
-            productName={product.name}
-            price={product.price}
-            description={product.description}
-          />
-        ))}
+    <div class="container mx-auto px-4 my-3 flex flex-col flex-grow justify-center items-center overflow-y-auto">
+      <div className="justify-center items-center w-full h-full">
+        <SliderBanner />
       </div>
+      <ListProduct title={"Sneaker"} product={products} />
     </div>
   );
 };

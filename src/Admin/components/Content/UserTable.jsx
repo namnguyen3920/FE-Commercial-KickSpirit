@@ -28,8 +28,6 @@ const UserTable = () => {
   };
   const handleDeleteData = async () => {
     try {
-      console.log("Current user: ", deleteUserID);
-      console.log("function call from user table");
       await UserRequest.deleteUser(deleteUserID);
       setUser((pre) => {
         const newUsers = [...pre];

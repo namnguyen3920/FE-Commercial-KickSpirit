@@ -27,6 +27,20 @@ const LoginForm = ({ isLogin, setIsLogin }) => {
     }));
   };
 
+  const Input = ({ type, id, name, value, onChange }) => {
+    return (
+      <input
+        required
+        type={type}
+        id={id}
+        name={name}
+        value={value}
+        onChange={onChange}
+        className="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
+      />
+    );
+  };
+
   return (
     <div className="h-screen overflow-hidden flex items-center justify-center pt-12">
       <div className="flex items-center min-h-screen p-4s lg:justify-center">
@@ -68,12 +82,14 @@ const LoginForm = ({ isLogin, setIsLogin }) => {
                 >
                   User name
                 </label>
-                <Input
+                <input
+                  required
                   type="text"
                   id="username"
                   name="username"
                   value={formData.username}
                   onChange={handleChange}
+                  className="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
                 />
               </div>
               <div className="flex flex-col space-y-1">
@@ -99,19 +115,6 @@ const LoginForm = ({ isLogin, setIsLogin }) => {
                   onChange={handleChange}
                   class="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
                 />
-              </div>
-              <div className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  id="remember"
-                  className="w-4 h-4 transition duration-300 rounded focus:ring-2 focus:ring-offset-0 focus:outline-none focus:ring-blue-200"
-                />
-                <label
-                  for="remember"
-                  className="text-sm font-semibold text-gray-500"
-                >
-                  Remember me
-                </label>
               </div>
               <div>
                 <button
@@ -187,20 +190,6 @@ const LoginForm = ({ isLogin, setIsLogin }) => {
         </div>
       </div>
     </div>
-  );
-};
-
-const Input = ({ type, id, name, value, onChange }) => {
-  return (
-    <input
-      required
-      tpye={type}
-      id={id}
-      name={name}
-      value={value}
-      onChange={onChange}
-      className="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
-    />
   );
 };
 

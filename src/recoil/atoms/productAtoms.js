@@ -5,6 +5,58 @@ export const productState = atom ({
     default: [],
 });
 
+export const currentProductState = atom ({
+    key:'currentProductState',
+    default: [],
+    effects: [
+      ({ onSet, setSelf }) => {
+        const currentProduct = localStorage.getItem("currentProduct");
+        if (currentProduct) {
+          setSelf(JSON.parse(currentProduct));
+        }
+  
+        onSet((newProduct) => {
+          if (newProduct) {
+            localStorage.setItem("currentProduct", JSON.stringify(newProduct));
+          } else {
+            localStorage.removeItem("currentProduct");
+          }
+        });
+      },
+    ],
+});
+
+export const productRelatedState = atom ({
+  key: 'productRelatedState',
+  default: [],
+});
+
+export const sellingProductState = atom ({
+  key: 'sellingProductState',
+  default: [],
+});
+
+export const productDetailState = atom ({
+    key: 'productDetailState',
+    default: [],
+    effects: [
+        ({ onSet, setSelf }) => {
+          const savedProduct = localStorage.getItem("selectedProduct");
+          if (savedProduct) {
+            setSelf(JSON.parse(savedProduct));
+          }
+    
+          onSet((newProduct) => {
+            if (newProduct) {
+              localStorage.setItem("selectedProduct", JSON.stringify(newProduct));
+            } else {
+              localStorage.removeItem("selectedProduct");
+            }
+          });
+        },
+      ],
+})
+
 export const searchProductState = atom ({
     key: 'searchProductState',
     default:'',

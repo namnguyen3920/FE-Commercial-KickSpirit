@@ -5,11 +5,12 @@ const baseURL = '/products'
 class ProductRequest {
     
     getAllProducts(){
-        let url = baseURL;
-        return AxiosHelper.get(url);
+        return AxiosHelper.get(baseURL);
     }
 
-
+    getSellingProduct(id){
+        return AxiosHelper.get(`${baseURL}/selling/${id}`)
+    }
 }
 
 export default new ProductRequest();

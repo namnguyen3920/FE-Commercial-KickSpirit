@@ -12,7 +12,6 @@ export const useAuthLogic = ({formData, isLogin, setIsLogin, error, setError}) =
     const handleSignupSubmit = async (e) => {
         e.preventDefault();
         setError(null);
-
         if (formData.password !== formData.confirm_password) {
           setError("Password and confirmation password mismatch!");
           return;
@@ -43,7 +42,8 @@ export const useAuthLogic = ({formData, isLogin, setIsLogin, error, setError}) =
         try {
           const response = await UserRequest.login(formData.username, formData.password);            
           const {user, token} = response;
-          const {password, ...userInfo} = user;
+          const {password, ...userInfo} = user;          
+        console.log("Signup Clicked!");
           localStorage.setItem('user', JSON.stringify(userInfo));
           setUserState({ userInfo, token });
           navigate("/");

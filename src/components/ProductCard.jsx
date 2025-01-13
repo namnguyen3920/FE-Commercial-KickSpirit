@@ -1,55 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BsSuitHeartFill } from "react-icons/bs";
 import { GiReturnArrow } from "react-icons/gi";
 import { FaShoppingCart } from "react-icons/fa";
 import { MdOutlineLabelImportant } from "react-icons/md";
 
-const ProductCard = (props) => {
-
-    return (
-        <a href="#">
-            <div className="w-full relative">
-                <div className="max-w-48 max-h-36 relative overflow-y-hidden ">
-                    <div>
-                        <img className="w-full h-48" src={props.img} />
-                    </div>
-                    {/* <div className="w-full h-32 absolute bg-white -bottom-[130px] group-hover:bottom-0 duration-700">
-                    <ul className="w-full h-full flex flex-col items-end justify-center gap-2 font-titleFont px-2 border-l border-r">
-                        <li className="text-[#767676] hover:text-primeColor text-sm font-normal border-b-[1px] border-b-gray-200 hover:border-b-primeColor flex items-center justify-end gap-2 hover:cursor-pointer pb-1 duration-300 w-full">
-                            Add to Cart
-                            <span>
-                                <FaShoppingCart />
-                            </span>
-                        </li>
-                        <li className="text-[#767676] hover:text-primeColor text-sm font-normal border-b-[1px] border-b-gray-200 hover:border-b-primeColor flex items-center justify-end gap-2 hover:cursor-pointer pb-1 duration-300 w-full">
-                            View Details
-                            <span className="text-lg">
-                                <MdOutlineLabelImportant />
-                            </span>
-                        </li>
-                        <li className="text-[#767676] hover:text-primeColor text-sm font-normal border-b-[1px] border-b-gray-200 hover:border-b-primeColor flex items-center justify-end gap-2 hover:cursor-pointer pb-1 duration-300 w-full">
-                            Add to Wish List
-                            <span>
-                                <BsSuitHeartFill />
-                            </span>
-                        </li>
-                    </ul>
-                </div> */}
-                </div>
-                <div className="max-w-80 py-6 flex flex-col gap-1 border-t-0 px-4">
-                    <div className="flex items-center justify-between font-titleFont">
-                        <h2 className="text-lg text-primeColor font-bold">
-                            {props.productName}
-                        </h2>
-                        <p className="text-[#767676] text-[14px]">${props.price}</p>
-                    </div>
-                    <div>
-                        <p className="text-[#767676] text-[14px]">{props.description}</p>
-                    </div>
-                </div>
-            </div>
-        </a>
-    );
+const ProductCard = ({ product, handleProductClick }) => {
+  return (
+    <div className="container">
+      <div
+        data-testid="product-tile"
+        className="rounded-lg transition flex flex-col"
+        onClick={() => handleProductClick(product.product_id)}
+        style={{ cursor: "pointer", margin: "10px 0" }}
+      >
+        <div className="flex-1 flex justify-center items-center p-2">
+          <img
+            src={product.img}
+            alt={product.product_name}
+            className="object-contain w-full h-32"
+          />
+        </div>
+        <div
+          data-testid="product-details"
+          className="flex flex-col items-start p-2"
+        >
+          <h3 className="text-sm font-medium mb-1">{product.product_name}</h3>
+          <p className="text-lg font-bold">${product.retail_price}</p>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default ProductCard;
