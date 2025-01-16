@@ -1,11 +1,12 @@
 import React from "react";
 import CategoriesLink from "./header-components/category-components/CategoriesLink";
 import HeaderLogo from "./header-components/HeaderLogo";
-import { BrandsContent } from "./header-components/category-components/categories-contents/BrandsContent";
-import { MenContent } from "./header-components/category-components/categories-contents/MenContents";
-import { WomenContent } from "./header-components/category-components/categories-contents/WomenContent";
-import { KidContent } from "./header-components/category-components/categories-contents/KidContent";
-
+import {
+  BrandsContent,
+  SneakerContent,
+  ShoesContent,
+  SlidesContent,
+} from "./header-components/category-components/categories-contents";
 const Header = () => {
   return (
     <header>
@@ -17,14 +18,14 @@ const Header = () => {
         <CategoriesLink href="#" Contents={BrandsContent}>
           <div class="font-bold">Brands</div>
         </CategoriesLink>
-        <CategoriesLink href="#" Contents={MenContent}>
-          <div class="font-bold">Men</div>
+        <CategoriesLink href="#" Contents={SneakerContent}>
+          <div class="font-bold">Sneaker</div>
         </CategoriesLink>
-        <CategoriesLink href="#" Contents={WomenContent}>
-          <div class="font-bold">Women</div>
+        <CategoriesLink href="#" Contents={ShoesContent}>
+          <div class="font-bold">Shoes</div>
         </CategoriesLink>
-        <CategoriesLink href="#" Contents={KidContent}>
-          <div class="font-bold">Kids</div>
+        <CategoriesLink href="#" Contents={SlidesContent}>
+          <div class="font-bold">Slides</div>
         </CategoriesLink>
       </div>
     </header>

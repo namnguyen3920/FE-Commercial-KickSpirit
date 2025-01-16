@@ -16,7 +16,7 @@ const FooterBottom = () => {
               Your Privacy Choices
             </a>
           </div>
-          <div>©2025 StockX. All Rights Reserved.</div>
+          <div>©2025 Kickspirit. All Rights Reserved.</div>
         </div>
       </div>
     </div>

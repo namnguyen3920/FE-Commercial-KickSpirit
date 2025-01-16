@@ -4,9 +4,9 @@ const ModalLayout = ({ title, isOpen, onClose, children, className = "" }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed p-4 w-full max-w-2xl max-h-full">
+    <div className="p-4 w-full max-w-4xl max-h-full">
       <div className="z-50 fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-5">
-        <div className="bg-white p-6 rounded shadow-lg w-96">
+        <div className="bg-white p-6 rounded shadow-lg w-full max-w-4xl">
           <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               {title}

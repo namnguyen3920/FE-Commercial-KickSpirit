@@ -1,18 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
-  sellingProductState,
+  buyingProductState,
   currentProductState,
 } from "../../recoil/atoms/productAtoms";
 
+import ProceedToLoginModal from "./ProceedToLoginModal";
+import OrderReview from "./OrderReview";
+
 const ProductOrder = () => {
+  const userInfo = JSON.parse(localStorage.getItem("user"));
+  // const currentProduct = JSON.parse(localStorage.getItem("currentProduct"));
   const currentProduct = useRecoilValue(currentProductState);
-  console.log("Log product before everything: ", currentProduct);
-  const shippingPrice = 10;
-  const subtotal =
-    currentProduct.reduce((acc, product) => acc + product.sellingPrice, 0) +
-    shippingPrice;
+  const product = currentProduct[0];
+  const [buying, setBuying] = useRecoilState(buyingProductState);
+  const [isLoginRequiredModalOpen, setIsLoginRequiredModalOpen] =
+    useState(false);
+  const [view, setView] = useState("details");
+  const [orderDetails, setOrderDetails] = useState({});
+  const [savedAddress, setSavedAddress] = useState(null);
+  const [error, setError] = useState("");
+  const [formData, setFormData] = useRecoilState(buyingProductState);
+
+  const sellingPrice = product.sellingPrice || 0;
+  const fees = {
+    shipping: 10,
+    processing: 5,
+    authenticate: 3,
+  };
+
+  const amounts = [
+    sellingPrice,
+    fees.shipping,
+    fees.processing,
+    fees.authenticate,
+  ];
+  const subtotal = amounts.reduce((total, amount) => total + amount, 0);
 
   const [orderInfo, setOrderInfo] = useState({
     total_price: subtotal,
@@ -29,20 +53,67 @@ const ProductOrder = () => {
     setOrderInfo((prev) => ({ ...prev, [name]: value }));
   };
 
-  const [isEditingAddress, setIsEditingAddress] = useState(false);
-  const [savedAddress, setSavedAddress] = useState(null);
-
   const navigate = useNavigate();
 
   const handleEditAddressClick = () => {
-    setIsEditingAddress(true);
+    setView("address");
   };
 
   const handleSaveInfoClick = () => {
+    if (
+      !orderInfo.f_name ||
+      !orderInfo.l_name ||
+      !orderInfo.street ||
+      !orderInfo.city ||
+      !orderInfo.ward ||
+      !orderInfo.district
+    ) {
+      setError("Please fill in all required fields.");
+      return;
+    }
+    setError("");
     setSavedAddress(orderInfo);
     console.log("Address: ", orderInfo);
-    setIsEditingAddress(false);
+    setView("details");
   };
+
+  const handleReviewProductClick = () => {
+    if (
+      !orderInfo ||
+      !orderInfo.street ||
+      !orderInfo.city ||
+      !orderInfo.ward ||
+      !orderInfo.district
+    ) {
+      setError("Please complete your address before proceeding.");
+      return;
+    }
+    setBuying(orderInfo);
+    setView("orders");
+
+    if (!userInfo) {
+      setIsLoginRequiredModalOpen(true);
+      return;
+    }
+    setFormData(() => ({
+      user_id: userInfo.user_id,
+      selling_id: product.selling_id,
+      total: subtotal,
+      shipping_address: {
+        street: orderInfo.street,
+        ward: orderInfo.ward,
+        district: orderInfo.district,
+        city: orderInfo.city,
+      },
+    }));
+
+    setOrderDetails(() => ({
+      process: fees.processing + fees.authenticate,
+      product_price: product.sellingPrice,
+      subtotal: subtotal,
+    }));
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <button
@@ -54,17 +125,24 @@ const ProductOrder = () => {
       </button>
       {currentProduct.map((product, key) => (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="flex justify-center items-center">
+          <div className="relative flex justify-center items-center">
+            <div className="absolute top-4 text-center bg-white px-4 py-2">
+              <h1 className="text-xl font-bold">{product.product_name}</h1>
+              <p className="text-sm text-gray-600">
+                Size: US {product.selectedSize}
+              </p>
+            </div>
             <img
               src={product.img}
               alt={product.product_name}
               className="w-full max-w-md object-contain"
             />
           </div>
-          {isEditingAddress ? (
+          {view === "address" && (
             <>
               <div className="mt-6">
                 <h2 className="text-xl font-bold mb-4">Shipping Information</h2>
+                {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
                 <form className="space-y-4">
                   <div>
                     <label className="block font-semibold">First Name *</label>
@@ -141,21 +219,34 @@ const ProductOrder = () => {
                     </div>
                   </div>
                 </form>
+                <div class="flex items-center space-x-4 mt-8">
+                  <button
+                    onClick={handleSaveInfoClick}
+                    className="flex-grow bg-main-color text-white rounded-md py-2"
+                  >
+                    Save
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setView("details");
+                    }}
+                    className="flex-[0.5] bg-white text-black rounded-md border border-black py-2 px-4"
+                  >
+                    Cancel
+                  </button>
+                </div>
               </div>
             </>
-          ) : (
+          )}
+          {view === "details" && (
             <div>
-              <h1 className="text-3xl font-bold">{product.product_name}</h1>
-              <p className="mt-2 text-gray-600">
-                Size: US{" "}
-                <span className="font-semibold">{product.selectedSize}</span>
-              </p>
               <div className="mt-6 space-y-4">
                 <div className="flex justify-between items-center border rounded-lg p-4">
                   <div>
                     <p className="text-sm font-semibold">Price</p>
                     <p className="text-gray-600 text-sm">
-                      Ships to Kickspirit first for Verification
+                      Ships to Kickspirit first for Verification ($5 fee)
                     </p>
                   </div>
                   <p className="text-main-color font-bold text-lg">
@@ -175,7 +266,7 @@ const ProductOrder = () => {
                 </div>
                 <div className="flex justify-between items-center border-t pt-4">
                   <p className="text-gray-700">
-                    {savedAddress
+                    {savedAddress && savedAddress.street
                       ? `${savedAddress.street}, ${savedAddress.ward}, ${savedAddress.district}, ${savedAddress.city}`
                       : "Please enter your address"}
                   </p>
@@ -186,6 +277,7 @@ const ProductOrder = () => {
                     EDIT
                   </button>
                 </div>
+                {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
                 <div className="flex justify-between items-center border-t pt-4">
                   <p className="text-gray-600">Discount Code</p>
                   <button className="text-main-color">ADD</button>
@@ -195,45 +287,44 @@ const ProductOrder = () => {
                   <button className="text-main-color">EDIT</button>
                 </div>
               </div>
+              <div className="mt-8 border-t pt-4">
+                <div className="flex justify-between items-center">
+                  <p className="font-bold text-lg">
+                    Subtotal{" "}
+                    <span className="text-main-color">
+                      ${subtotal.toFixed(2)}
+                    </span>
+                  </p>
+                </div>
+                <div className="mt-8"></div>
+              </div>
+              <button
+                onClick={handleReviewProductClick}
+                className="w-full bg-main-color text-white rounded-md py-2"
+              >
+                Review Product
+              </button>
             </div>
+          )}
+          {view === "orders" && (
+            <OrderReview
+              setView={setView}
+              orderDetails={orderDetails}
+              currentProduct={product}
+              buying={buying}
+            />
           )}
         </div>
       ))}
-      <div className="mt-8 border-t pt-4">
-        <div className="flex justify-between items-center">
-          <p className="font-bold text-lg">
-            Subtotal{" "}
-            <span className="text-main-color">${subtotal.toFixed(2)}</span>
-          </p>
-        </div>
-        <div className="mt-8">
-          {isEditingAddress ? (
-            <div class="flex items-center space-x-4">
-              <button
-                onClick={handleSaveInfoClick}
-                className="flex-grow bg-main-color text-white rounded-md py-2"
-              >
-                Save
-              </button>
-
-              <button
-                onClick={() => {
-                  setIsEditingAddress(false);
-                }}
-                className="flex-[0.5] bg-white text-black rounded-md border border-black py-2 px-4"
-              >
-                Cancel
-              </button>
-            </div>
-          ) : (
-            <button
-              onClick={() => console.log("Review Product")}
-              className="w-full bg-main-color text-white rounded-md py-2"
-            >
-              Review Product
-            </button>
-          )}
-        </div>
+      <div>
+        <ProceedToLoginModal
+          isOpen={isLoginRequiredModalOpen}
+          onClose={() => setIsLoginRequiredModalOpen(false)}
+          onProceedToLogin={() => {
+            setIsLoginRequiredModalOpen(false);
+            navigate("/login");
+          }}
+        />
       </div>
     </div>
   );

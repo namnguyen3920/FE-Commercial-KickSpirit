@@ -1,38 +1,42 @@
-export function BrandsContent() {
-    const brandsList = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
-        'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'X',
-        'Y', 'Z', '#'
-    ];
+import React, { useState, useEffect } from "react";
+import { BrandRequest } from "../../../../caller/api-requestor";
+import { Link } from "react-router-dom";
 
-    const brandsMap = {
-
+const BrandsContent = () => {
+  const [brands, setBrands] = useState([]);
+  useEffect(() => {
+    const fetchBrands = async () => {
+      try {
+        const brandResponse = await BrandRequest.getBrandName();
+        setBrands(brandResponse);
+      } catch (error) {
+        console.error("Error fetching brands", error);
+      }
     };
-    
-    return (
-        <div class="relative flex justify-center -translate-x-1/3 h-max bg-white p-9  shadow-xl">
-            <div className="items-center grid md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-2 gap-10">
-                <div className="relative items-center">
-                    <p className="font-bold mb-4">Brands</p>
-                    <div className="absoloute grid md:grid-cols-5 gap-2">
-                        {brandsList.map(letter => (
-                            // <a href={hrefMap[letter]} className={`hover:underline ${letter}`}>
-                            //     {letter}
-                            // </a>
-                            <a href="#" className={`hover:underline ${letter}`}>
-                                {letter}
-                            </a>
-                        ))}
-                    </div>
-                </div>
-                <div className="relative">
-                    <p className="font-bold mb-4">Top Brands</p>
-                    <div>This if second col contents</div>
-                </div>
-                <div className="relative">
-                    <p className="font-bold mb-4">All Brands</p>
-                    <div>This if third col contents</div>
-                </div>
-            </div>
+
+    fetchBrands();
+  }, []);
+  return (
+    <div class="relative flex justify-center -translate-x-1/3 h-max bg-white p-9  shadow-xl">
+      <div className="items-center grid md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-2 gap-10">
+        <div className="relative">
+          <p className="text-xl font-bold mb-6">All Brands</p>
+          <ul className="grid grid-cols-2 gap-4">
+            {brands.map((brand) => (
+              <li key={brand.brand_id}>
+                <Link
+                  to={`/brands/${brand.brand_name}`}
+                  className="text-gray-700 font-medium hover:underline"
+                >
+                  {brand.brand_name}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
+
+export default BrandsContent;

@@ -9,6 +9,8 @@ class GeneralRequest {
         return AxiosHelper.get(`${baseURL}/banner`);
     }
 
+    
+
 }
 
 export default new GeneralRequest();

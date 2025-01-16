@@ -2,11 +2,12 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { EditUserInfoModal } from "./Modal";
 
-const Profile = (userSet) => {
-  // const [newUser, setNewUser] = useState({})
+const Profile = ({ currentUser }) => {
+  const [newUserName, setNewUserName] = useState({});
   const [showAddModal, setShowAddModal] = useState(false);
-  // setNewUser(user.user[0])
-  const user = userSet.user[0];
+  console.log("currentUser", currentUser);
+  //setNewUserName(currentUser);
+  const user = currentUser;
 
   const toggleAddModal = () => {
     setShowAddModal(!showAddModal);

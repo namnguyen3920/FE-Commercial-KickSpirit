@@ -15,6 +15,7 @@ import {
 import ProductTable from './Admin/components/Content/ProductTable';
 import UserTable from './Admin/components/Content/UserTable';
 import PlaceOrder from './components/order-components/PlaceOrder';
+import BrandProductPage from './pages/BrandProductPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -26,12 +27,13 @@ root.render(
             <Route index element={<Home />} />
             <Route path="product/:id" element={<ProductDetailPage />} />
             <Route path="profile" element={<ProfilePage />} />
+            <Route path="brands/:brandName" element={<BrandProductPage />} />
           </Route>          
         </Routes>
         <Routes>
           <Route path="/login" element={<Login />}/>
           <Route path="/product-order" element={<ProductOrderPage />} >
-            <Route path="buy" element={<PlaceOrder />} />
+            <Route path="buying" element={<PlaceOrder />} />
           </Route>
         </Routes>
         <Routes>

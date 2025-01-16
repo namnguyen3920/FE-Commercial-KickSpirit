@@ -75,9 +75,9 @@ const HeaderLogo = () => {
       </div>
       <a href="/" className="flex items-center space-x-3">
         <img
-          src="https://flowbite.com/docs/images/logo.svg"
+          src="https://res.cloudinary.com/dfowalm4d/image/upload/v1736964871/logo_yhxhg0.png"
           className="h-8"
-          alt="Flowbite Logo"
+          alt="Kickspirit Logo"
         />
         <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
           Kickspirit

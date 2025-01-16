@@ -8,6 +8,19 @@ class UserRequest {
         return AxiosHelper.get(baseURL);
     }
 
+    getUserById = async (id) => {
+        const response = await AxiosHelper.get(`${baseURL}/${id}`);
+        return response;
+    }
+
+    modifyUserInfo = async (formData, id) => {
+        console.log("Form data", formData);
+        console.log("id user", id);
+        const response = await AxiosHelper.put(`${baseURL}/update-user/${id}`, formData)
+        console.log("response", response);
+        return response;
+    }
+
     addUser = async(formData) => {
         try {
             const response = await AxiosHelper.post(`${baseURL}/add-user`, formData)

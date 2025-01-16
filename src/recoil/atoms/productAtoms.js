@@ -36,6 +36,11 @@ export const sellingProductState = atom ({
   default: [],
 });
 
+export const buyingProductState = atom ({
+  key: 'buyingProductState',
+  default: [],
+});
+
 export const productDetailState = atom ({
     key: 'productDetailState',
     default: [],

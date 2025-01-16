@@ -19,15 +19,16 @@ const ProductDetail = ({ product }) => {
   const [error, setError] = useState(null);
   const isSizeAvailable = selling?.some((item) => item.size === selectedSize);
 
-  const handleBuyNow = (size, price) => {
+  const handleBuyNow = (size, price, selling_id) => {
     const currentProductOrder = {
       ...product,
       sellingPrice: parseFloat(price),
       selectedSize: size,
+      selling_id: selling_id,
     };
 
     setCurrentProduct(() => [currentProductOrder]);
-    navigate("/product-order/buy");
+    navigate("/product-order/buying");
   };
 
   useEffect(() => {
@@ -99,7 +100,11 @@ const ProductDetail = ({ product }) => {
                   </p>
                   <button
                     onClick={() =>
-                      handleBuyNow(selectedSize, product.selling_price)
+                      handleBuyNow(
+                        selectedSize,
+                        product.selling_price,
+                        product.selling_id
+                      )
                     }
                     className="w-full bg-main-color text-white rounded-md py-2 mb-2"
                   >
