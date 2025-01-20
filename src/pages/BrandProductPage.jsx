@@ -1,71 +1,120 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import FilterSidebar from "../components/filter-product/FilterSideBar";
-const categories = ["Apparel", "Accessories", "Sneakers", "Shoes"];
+import { ListProduct } from "../components";
+import { productState } from "../recoil/atoms/productAtoms";
+import { ProductRequest } from "../caller/api-requestor";
+import { categoryState } from "../recoil/atoms/categoryAtoms";
+
 const BrandProductPage = () => {
   const { brandName } = useParams();
-  const [products, setProducts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [priceRange, setPriceRange] = useState([0, 1000]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [products, setProducts] = useRecoilState(productState);
 
   const handleFilterChange = (filters) => {
     console.log("Filters:", filters);
   };
 
   useEffect(() => {
-    // Giả lập API call để lấy sản phẩm dựa trên thương hiệu
     const fetchProducts = async () => {
-      // Replace this with an actual API call
-      const productList = [
-        {
-          id: 1,
-          name: `${brandName} Product 1`,
-          price: 100,
-          img: "https://via.placeholder.com/150",
-        },
-        {
-          id: 2,
-          name: `${brandName} Product 2`,
-          price: 200,
-          img: "https://via.placeholder.com/150",
-        },
-      ];
-      setProducts(productList);
+      try {
+        const allProducts = await ProductRequest.getAllProducts();
+        const filteredProducts = allProducts.filter(
+          (product) =>
+            product.brand_name.toLowerCase() === brandName.toLowerCase()
+        );
+
+        setProducts(filteredProducts);
+        setFilteredProducts(filteredProducts);
+
+        const uniqueCategories = [
+          ...new Set(filteredProducts.map((product) => product.category_name)),
+        ];
+        setCategories(uniqueCategories);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
     };
 
     fetchProducts();
-  }, [brandName]);
+  }, [brandName, setProducts]);
 
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+
+    let updatedProducts = products;
+
+    if (category !== "") {
+      updatedProducts = updatedProducts.filter(
+        (product) =>
+          product.category_name &&
+          product.category_name.toLowerCase() === category.toLowerCase()
+      );
+    }
+
+    if (priceRange[1] > 0) {
+      updatedProducts = updatedProducts.filter(
+        (product) =>
+          product.retail_price &&
+          product.retail_price >= priceRange[0] &&
+          product.retail_price <= priceRange[1]
+      );
+    }
+
+    setFilteredProducts(updatedProducts);
+  };
+  const handlePriceChange = (range) => {
+    setPriceRange(range);
+
+    let updatedProducts = products;
+
+    if (range[1] > 0) {
+      updatedProducts = updatedProducts.filter(
+        (product) =>
+          product.retail_price &&
+          product.retail_price >= range[0] &&
+          product.retail_price <= range[1]
+      );
+    }
+
+    if (selectedCategory !== "") {
+      updatedProducts = updatedProducts.filter(
+        (product) =>
+          product.category_name &&
+          product.category_name.toLowerCase() === selectedCategory.toLowerCase()
+      );
+    }
+
+    setFilteredProducts(updatedProducts);
+  };
   return (
-    <div className="flex bg-gray-50 min-h-screen">
-      {/* Sidebar */}
-      <aside className="w-1/4 p-6 bg-white sticky top-0">
+    <div className="container mx-auto min-h-screen flex">
+      <aside className="w-1/4 p-6 bg-white sticky top-0 min-h-screen">
         <FilterSidebar
           categories={categories}
-          onFilterChange={handleFilterChange}
+          selectedCategory={selectedCategory}
+          onCategoryChange={handleCategoryChange}
+          onPriceChange={handlePriceChange}
         />
       </aside>
 
-      {/* Product List */}
       <main className="flex-1 p-6">
         <h1 className="text-2xl font-bold mb-4">{brandName}</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.map((product) => (
-            <div
-              key={product.id}
-              className="bg-white p-4 rounded-md shadow-md flex flex-col"
-            >
-              <img
-                src={product.img}
-                alt={product.name}
-                className="w-full h-40 object-cover rounded-md"
-              />
-              <div className="mt-4">
-                <h3 className="text-gray-800 font-medium">{product.name}</h3>
-                <p className="text-black text-lg font-bold mt-2">
-                  ${product.price}
-                </p>
-              </div>
-            </div>
-          ))}
+        <div>
+          {filteredProducts.length > 0 ? (
+            <ListProduct
+              title={selectedCategory || "All Products"}
+              product={filteredProducts}
+            />
+          ) : (
+            <p className="text-gray-500 text-center mt-6">
+              No products match your filter criteria.
+            </p>
+          )}
         </div>
       </main>
     </div>

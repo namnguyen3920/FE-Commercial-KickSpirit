@@ -1,10 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const OrderConfirmedModal = ({ isOpen, orderDetails }) => {
+const OrderConfirmedModal = ({ isOpen, onClose, orderDetails }) => {
   const navigate = useNavigate();
+  if (!isOpen) return null;
   const handleOnContinue = () => {
     navigate("/");
+  };
+  const handleViewProfile = () => {
+    navigate("/profile");
   };
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
@@ -44,7 +48,7 @@ const OrderConfirmedModal = ({ isOpen, orderDetails }) => {
           <ul className="text-gray-600 text-sm list-disc pl-4 mt-2 space-y-1">
             <li>
               The seller is allowed 2 full business days to ship your item to
-              StockX.
+              Kickspirit.
             </li>
             <li>
               Our expert authenticators will verify the product upon arrival.
@@ -57,7 +61,7 @@ const OrderConfirmedModal = ({ isOpen, orderDetails }) => {
         </div>
         <div className="mt-6 flex justify-center">
           <button
-            onClick={handleOnContinue}
+            onClick={handleViewProfile}
             className="px-6 py-2 bg-main-color text-white rounded-md"
           >
             View Order
@@ -74,4 +78,4 @@ const OrderConfirmedModal = ({ isOpen, orderDetails }) => {
   );
 };
 
-export default OrderConfirmedModal;
+export default React.memo(OrderConfirmedModal);

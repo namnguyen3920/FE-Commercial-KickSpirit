@@ -47,6 +47,12 @@ const ProductOrder = () => {
     ward: "",
     district: "",
   });
+  const updateBuying = (buying) => {
+    return new Promise((resolve) => {
+      setBuying(buying);
+      setTimeout(() => resolve(buying), 0);
+    });
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -73,11 +79,15 @@ const ProductOrder = () => {
     }
     setError("");
     setSavedAddress(orderInfo);
-    console.log("Address: ", orderInfo);
+    console.log("Saved Address: ", savedAddress);
     setView("details");
   };
 
-  const handleReviewProductClick = () => {
+  const handleReviewProductClick = async () => {
+    if (!userInfo) {
+      setIsLoginRequiredModalOpen(true);
+      return;
+    }
     if (
       !orderInfo ||
       !orderInfo.street ||
@@ -88,13 +98,19 @@ const ProductOrder = () => {
       setError("Please complete your address before proceeding.");
       return;
     }
-    setBuying(orderInfo);
-    setView("orders");
+    const updatedBuying = {
+      ...orderInfo,
+      shipping_address: {
+        street: orderInfo.street,
+        ward: orderInfo.ward,
+        district: orderInfo.district,
+        city: orderInfo.city,
+      },
+    };
 
-    if (!userInfo) {
-      setIsLoginRequiredModalOpen(true);
-      return;
-    }
+    await updateBuying(updatedBuying);
+    //setBuying(orderInfo);
+
     setFormData(() => ({
       user_id: userInfo.user_id,
       selling_id: product.selling_id,
@@ -112,8 +128,16 @@ const ProductOrder = () => {
       product_price: product.sellingPrice,
       subtotal: subtotal,
     }));
+    if (!userInfo) {
+      setIsLoginRequiredModalOpen(true);
+      return;
+    } else {
+      setView("orders");
+    }
   };
-
+  useEffect(() => {
+    console.log("Updated Saved Address: ", savedAddress);
+  }, [savedAddress]);
   return (
     <div className="container mx-auto px-4 py-8">
       <button

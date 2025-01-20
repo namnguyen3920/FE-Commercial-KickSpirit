@@ -18,7 +18,7 @@ const Header = () => {
         <CategoriesLink href="#" Contents={BrandsContent}>
           <div class="font-bold">Brands</div>
         </CategoriesLink>
-        <CategoriesLink href="#" Contents={SneakerContent}>
+        {/* <CategoriesLink href="#" Contents={SneakerContent}>
           <div class="font-bold">Sneaker</div>
         </CategoriesLink>
         <CategoriesLink href="#" Contents={ShoesContent}>
@@ -26,7 +26,7 @@ const Header = () => {
         </CategoriesLink>
         <CategoriesLink href="#" Contents={SlidesContent}>
           <div class="font-bold">Slides</div>
-        </CategoriesLink>
+        </CategoriesLink> */}
       </div>
     </header>
   );

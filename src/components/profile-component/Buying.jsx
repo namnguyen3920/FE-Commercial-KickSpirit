@@ -32,7 +32,9 @@ const Buying = () => {
   const handleDelete = (buyingId) => {
     console.log("Deleting item with ID:", buyingId);
   };
-
+  useEffect(() => {
+    console.log("productData", productData);
+  });
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -43,6 +45,7 @@ const Buying = () => {
 
   return (
     <div className="w-full overflow-x-auto">
+      <div className="flex justify-start space-x-8 border-b-2 pb-2"></div>
       {productData.length === 0 ? (
         <div className="flex flex-col items-center justify-center mt-10">
           <p className="text-gray-500 text-lg mb-4">

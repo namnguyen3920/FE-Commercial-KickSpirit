@@ -119,13 +119,6 @@ function EditUserInfoModal({ isOpen, onClose, user }) {
         </form>
       </ModalLayout>
     </>
-    // <div class="fixed p-4 w-full max-w-2xl max-h-full">
-    //   <div className="z-50 fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
-    //     <div className="bg-white p-6 rounded shadow-lg w-96">
-    //
-    //     </div>
-    //   </div>
-    // </div>
   );
 }
 

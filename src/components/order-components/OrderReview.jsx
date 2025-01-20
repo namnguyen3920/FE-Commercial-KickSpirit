@@ -21,29 +21,20 @@ const ReviewOrder = ({ setView, currentProduct, orderDetails, buying }) => {
     shipping_address: `${street}, ${ward}, ${district}, ${city}`,
   };
 
-  const handlePlaceOrderClick = async () => {
-    console.log("orderDetails", orderDetails);
-    console.log("formData", formData);
-    console.log(
-      "ProductRequest.addBuyingProduct:",
-      ProductRequest.addBuyingProduct
-    );
-    try {
-      setIsLoading(true);
-      const response = await ProductRequest.addBuyingProduct(formData);
-      console.log("Response from API:", response);
-      setIsOrderConfirmationModalOpen(true);
-    } catch (err) {
-      console.error("Error placing order:", err);
-      setError(err.message);
-    } finally {
-      setIsLoading(false);
-    }
+  const handlePlaceOrderClick = () => {
+    setIsOrderConfirmationModalOpen(true);
+    const addBuying = async () => {
+      try {
+        setIsLoading(true);
+        const response = await ProductRequest.addBuyingProduct(formData);
+      } catch (err) {
+        console.error("Error placing order:", err);
+        setError(err.message);
+      }
+    };
+    addBuying();
   };
 
-  useEffect(() => {
-    console.log("buying", buying);
-  });
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="bg-gray-50 p-6 rounded-lg shadow-md">
@@ -114,18 +105,17 @@ const ReviewOrder = ({ setView, currentProduct, orderDetails, buying }) => {
           Place Order
         </button>
       </div>
-      <ProceedToLoginModal
+      {/* <ProceedToLoginModal
         isOpen={isLoginRequiredModalOpen}
         onClose={() => setIsLoginRequiredModalOpen(false)}
         onProceedToLogin={() => {
           setIsLoginRequiredModalOpen(false);
           navigate("/login");
         }}
-      />
+      /> */}
 
       <OrderConfirmationModal
         isOpen={isOrderConfirmationModalOpen}
-        onClose={() => setIsOrderConfirmationModalOpen(false)}
         orderDetails={orderDetails}
       />
     </div>

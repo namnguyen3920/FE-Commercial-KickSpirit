@@ -185,15 +185,6 @@ const SignupForm = ({ isLogin, setIsLogin }) => {
                   Sign Up
                 </button>
               </div>
-              <div className="flex flex-col space-y-5">
-                <span className="flex items-center justify-center space-x-2">
-                  <span className="h-px bg-gray-400 w-14"></span>
-                  <span className="font-normal text-gray-500">
-                    or sign up with
-                  </span>
-                  <span className="h-px bg-gray-400 w-14"></span>
-                </span>
-              </div>
             </form>
           </div>
         </div>

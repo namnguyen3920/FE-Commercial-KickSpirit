@@ -9,7 +9,7 @@ const ListProduct = ({ title, product }) => {
   const setProductDetail = useSetRecoilState(productDetailState);
   const handleProductClick = (product) => {
     setProductDetail(product);
-    navigate(`product/${product.product_id}`);
+    navigate(`/product/${product.product_id}`);
   };
   useEffect(() => {
     console.log("Current products in ListProduct:", product);

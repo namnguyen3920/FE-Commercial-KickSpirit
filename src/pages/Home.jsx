@@ -42,7 +42,7 @@ const Home = () => {
       <div className="justify-center items-center w-full h-full">
         <SliderBanner />
       </div>
-      <ListProduct title={"Sneaker"} product={products} />
+      <ListProduct title={"All Product"} product={products} />
     </div>
   );
 };

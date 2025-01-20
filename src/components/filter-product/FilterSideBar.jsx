@@ -1,44 +1,77 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { CategoryRequest } from "../../caller/api-requestor";
+import { categoryState } from "../../recoil/atoms/categoryAtoms";
 
-const FilterSidebar = ({ categories, onFilterChange }) => {
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [priceRange, setPriceRange] = useState([0, 5500]);
-
-  const handleCategoryChange = (category) => {
-    setSelectedCategory(category);
-    onFilterChange({ category, priceRange });
-  };
-
-  const handlePriceInputChange = (e, type) => {
-    const value = Math.max(
-      0,
-      Math.min(5500, parseInt(e.target.value, 10) || 0)
-    ); // Giới hạn giá trị từ 0 đến 5500
-    const newRange =
-      type === "min" ? [value, priceRange[1]] : [priceRange[0], value];
-    setPriceRange(newRange);
-    onFilterChange({ category: selectedCategory, priceRange: newRange });
-  };
+const FilterSidebar = ({
+  categories,
+  selectedCategory,
+  onCategoryChange,
+  onPriceChange,
+}) => {
+  const [priceRange, setPriceRange] = useState([0, 1000]);
 
   const handlePriceChange = (e) => {
-    const value = Math.max(
-      0,
-      Math.min(5500, parseInt(e.target.value, 10) || 0)
-    );
+    const value = parseInt(e.target.value, 10);
     setPriceRange([0, value]);
-    onFilterChange({ priceRange: [0, value] });
+    onPriceChange([0, value]);
   };
 
+  // const handlePriceInputChange = (e, type) => {
+  //   const value = Math.max(
+  //     0,
+  //     Math.min(5500, parseInt(e.target.value, 10) || 0)
+  //   );
+  //   const newRange =
+  //     type === "min" ? [value, priceRange[1]] : [priceRange[0], value];
+  //   setPriceRange(newRange);
+  //   onFilterChange({ category: selectedCategory, priceRange: newRange });
+  // };
+
+  // const handlePriceChange = (e) => {
+  //   const value = Math.max(
+  //     0,
+  //     Math.min(5500, parseInt(e.target.value, 10) || 0)
+  //   );
+  //   setPriceRange([0, value]);
+  //   onFilterChange({ priceRange: [0, value] });
+  // };
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     try {
+  //       // Fetch categories từ API dựa trên brandName
+  //       const response = await CategoryRequest.getCategoryByBrand(brandName);
+  //       setCategories(response); // Cập nhật danh sách category
+  //     } catch (error) {
+  //       console.error("Error fetching categories:", error);
+  //     }
+  //   };
+
+  //   if (brandName) {
+  //     fetchCategories();
+  //   }
+  // }, [brandName]);
   return (
-    <div className="w-64 bg-white p-4 shadow-md">
-      {/* Category Filter */}
-      <div className="mb-8">
+    <div className="flex flex-col space-y-8">
+      <div>
         <h3 className="font-bold text-lg mb-4">CATEGORY</h3>
         <ul className="space-y-2">
+          <li>
+            <button
+              onClick={() => onCategoryChange("")}
+              className={`block w-full text-left py-1 ${
+                selectedCategory === ""
+                  ? "font-bold text-blue-600"
+                  : "text-gray-700"
+              }`}
+            >
+              All Products
+            </button>
+          </li>
           {categories.map((category) => (
             <li key={category}>
               <button
-                onClick={() => handleCategoryChange(category)}
+                onClick={() => onCategoryChange(category)}
                 className={`block w-full text-left py-1 ${
                   selectedCategory === category
                     ? "font-bold text-blue-600"
@@ -62,7 +95,7 @@ const FilterSidebar = ({ categories, onFilterChange }) => {
         <input
           type="range"
           min="0"
-          max="5500"
+          max="1000"
           value={priceRange[1]}
           onChange={handlePriceChange}
           className="w-full"

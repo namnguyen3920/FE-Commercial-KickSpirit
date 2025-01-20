@@ -8,6 +8,25 @@ class ProductRequest {
         return AxiosHelper.get(baseURL);
     }
 
+    getProductById = async(id) => {
+        try {
+            const response = await AxiosHelper.get(`${baseURL}/${id}`);
+            console.log("Log from api", response);
+            return response;
+        }catch (err){
+            throw err;
+        }
+    }
+
+    deleteProduct = async(id) => {
+        try {
+            const response = await AxiosHelper.delete(`${baseURL}/del-product/${id}`);
+            return response;
+        } catch(err) {
+            throw err;
+        }
+    }
+
     addNewProduct = async(formData) => {
         try{
             const response = await AxiosHelper.post(`${baseURL}/add-product`, formData, {

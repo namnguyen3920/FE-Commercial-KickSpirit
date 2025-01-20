@@ -130,19 +130,19 @@ const UserTable = () => {
                             </svg>
                             Delete
                           </button>
-                          {showDeleteModal && (
-                            <DeleteModal
-                              isOpen={toggleDeleteModal}
-                              onClose={toggleDeleteModal}
-                              handleDelete={handleDeleteData}
-                            />
-                          )}
                         </div>
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
+              {showDeleteModal && (
+                <DeleteModal
+                  isOpen={toggleDeleteModal}
+                  onClose={toggleDeleteModal}
+                  handleDelete={handleDeleteData}
+                />
+              )}
             </div>
           </div>
         </div>

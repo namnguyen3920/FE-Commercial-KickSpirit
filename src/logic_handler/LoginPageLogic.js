@@ -27,6 +27,8 @@ export const useAuthLogic = ({formData, isLogin, setIsLogin, error, setError}) =
             user: token,
             token: data.token,
           });
+          console.log("Sigunp Clicked!");
+          alert("Register Sucessfully! Please login");
           setError(null);
           setIsLogin(true);
         } catch (err) {
@@ -42,8 +44,7 @@ export const useAuthLogic = ({formData, isLogin, setIsLogin, error, setError}) =
         try {
           const response = await UserRequest.login(formData.username, formData.password);            
           const {user, token} = response;
-          const {password, ...userInfo} = user;          
-        console.log("Signup Clicked!");
+          const {password, ...userInfo} = user;
           localStorage.setItem('user', JSON.stringify(userInfo));
           setUserState({ userInfo, token });
           navigate("/");

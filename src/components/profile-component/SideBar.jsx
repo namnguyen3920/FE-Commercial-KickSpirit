@@ -33,7 +33,7 @@ const Sidebar = ({ onSelectCategory }) => {
           <div className="hidden md:block">Selling</div>
         </li>
         <li
-          onClick={() => onSelectCategory("Favorites")}
+          onClick={() => onSelectCategory("Setting")}
           className="flex flex-row justify-center items-center hover:bg-gray-200 cursor-pointer hover:bg-profile-color py-5 px-2 space-x-2"
         >
           <Cog8ToothIcon className="w-6 h-6 mr-2" />

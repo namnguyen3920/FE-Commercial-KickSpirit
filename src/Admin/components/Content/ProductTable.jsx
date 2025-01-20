@@ -9,22 +9,40 @@ import { AddNewProductModal, ActionModal, UpdateProductModal } from "../Modal";
 const ProductsTables = () => {
   const [productData, setProducts] = useRecoilState(productState);
   const [showAddModal, setShowAddModal] = useState(false);
+
+  const [showDeleteModal, setDeleteModal] = useState(false);
   const [showUpdateProductModal, setShowUpdateProductModal] = useState(false);
+
+  const [deleteProductID, setDeleteProductId] = useState("");
 
   const toggleAddModal = () => {
     setShowAddModal(!showAddModal);
   };
 
+  const toggleDeleteModal = (id) => {
+    setDeleteProductId(id);
+    setDeleteModal(!showDeleteModal);
+  };
+
   const toggleUpdateProductModal = () => {
     setShowUpdateProductModal(!showUpdateProductModal);
   };
-
+  const handleDeleteData = async () => {
+    try {
+      await ProductRequest.deleteProduct(deleteProductID);
+      setProducts((pre) => {
+        const newProduct = [...pre];
+        return newProduct.filter(
+          (items) => items.product_id != deleteProductID
+        );
+      });
+    } catch (err) {
+      console.error("Error from Usertabel: ", err);
+    }
+  };
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const handleSubmitData = () => {
-    console.log("SubmitData Clicked");
-  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -88,11 +106,11 @@ const ProductsTables = () => {
                         scope="row"
                         className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap"
                       >
-                        {product.name}
+                        {product.product_name}
                       </th>
                       <td className="px-4 py-3">{product.category_name}</td>
                       <td className="px-4 py-3">{product.brand_name}</td>
-                      <td className="px-4 py-3">{product.price}</td>
+                      <td className="px-4 py-3">{product.retail_price}</td>
                       <td className="px-4 py-3 flex items-center justify-end">
                         <ActionModal
                           showPreviewModal={toggleUpdateProductModal}
@@ -110,11 +128,10 @@ const ProductsTables = () => {
           <AddNewProductModal
             isOpen={toggleAddModal}
             onClose={toggleAddModal}
-            handleSubmit={handleSubmitData}
           />
         )}
       </section>
-
+      {/* 
       <div
         id="readProductModal"
         tabindex="-1"
@@ -170,7 +187,7 @@ const ProductsTables = () => {
             </dl>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

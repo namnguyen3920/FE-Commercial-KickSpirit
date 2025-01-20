@@ -33,7 +33,7 @@ export const productRelatedState = atom ({
 
 export const sellingProductState = atom ({
   key: 'sellingProductState',
-  default: [],
+  default: null,
 });
 
 export const buyingProductState = atom ({
@@ -64,7 +64,7 @@ export const productDetailState = atom ({
 
 export const searchProductState = atom ({
     key: 'searchProductState',
-    default:'',
+    default:"",
 });
 
 export const filteredProductState = selector ({
@@ -73,11 +73,12 @@ export const filteredProductState = selector ({
         const products = get(productState);
         const searchQuery = get(searchProductState).toLowerCase();
         const filteredProducts = products.filter((product) => 
-            product.name.toLowerCase().includes(searchQuery)
+            product.product_name.toLowerCase().includes(searchQuery)
         );
 
         return filteredProducts.map(product => ({
-            name: product.name,
+            id: product.product_id,
+            name: product.product_name,
             img: product.img
         }));
     },

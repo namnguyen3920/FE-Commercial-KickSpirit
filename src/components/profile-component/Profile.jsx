@@ -28,14 +28,12 @@ const Profile = ({ currentUser }) => {
         >
           Edit
         </button>
-        {/* <button onClick={() => setIsEditName(true)} className="border hover:bg-white bg-black hover:text-black text-white text-sm px-4 py-1 rounded">Edit</button> */}
       </div>
 
       {showAddModal && (
         <EditUserInfoModal
           isOpen={toggleAddModal}
           onClose={toggleAddModal}
-          // handleSubmit={handleSubmitData}
           user={user}
         />
       )}
@@ -56,12 +54,6 @@ const Profile = ({ currentUser }) => {
         <div className="flex justify-between py-1">
           <span className="font-medium">Username</span>
           <span className="text-gray-600">{user.username}</span>
-        </div>
-        <div className="flex justify-between items-center py-1">
-          <span className="font-medium">Reset Password</span>
-          <button className="bg-black text-white px-4 py-2 rounded">
-            Reset Password
-          </button>
         </div>
       </div>
     </div>

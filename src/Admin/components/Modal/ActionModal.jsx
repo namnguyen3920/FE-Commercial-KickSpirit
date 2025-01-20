@@ -28,13 +28,6 @@ const ActionModal = ({ showEditModal, showPreviewModal, showDeleteModal }) => {
           </button>
           <button
             type="button"
-            onClick={showPreviewModal}
-            class="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200"
-          >
-            Preview
-          </button>
-          <button
-            type="button"
             onClick={showDeleteModal}
             class="inline-flex items-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900"
           >

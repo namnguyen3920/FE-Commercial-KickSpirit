@@ -9,7 +9,11 @@ class GeneralRequest {
         return AxiosHelper.get(`${baseURL}/banner`);
     }
 
-    
+    getSize(){
+        let url = '/size';
+        return AxiosHelper.get(url);
+    }
+
 
 }
 
